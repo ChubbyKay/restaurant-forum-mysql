@@ -28,6 +28,8 @@ module.exports = (app, passport) => {
   // admin 的路由設定
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
   app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
+  app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
+  app.post('/admin/restaurants', authenticatedAdmin, adminController.postRestaurant)
 
   // user 的路由設定
   app.get('/signup', userController.signUpPage)
