@@ -19,6 +19,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
+app.use('/upload', express.static(__dirname + '/upload'))
 
 // 傳入變數到 res.locals 裡，讓所有 view 都能存取
 app.use((req, res, next) => {
