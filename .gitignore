@@ -2,3 +2,4 @@ node_modules/
 .Ds
 temp/
 upload/
+.env
