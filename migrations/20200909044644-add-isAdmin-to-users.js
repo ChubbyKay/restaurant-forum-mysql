@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('Users', 'isAdmin', {
+    return queryInterface.addColumn('Users', 'isBdmin', {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     })
@@ -15,7 +15,7 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn('Users', 'isAdmin')
+    return queryInterface.removeColumn('Users', 'isBdmin')
     /**
      * Add reverting commands here.
      *
