@@ -11,10 +11,15 @@ const db = {};
 // 與資料庫連線，呼叫 config.json 裡的設定檔
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+  sequelize = new Sequelize(process.env[config.use_env_variable], config)
+} else sequelize = new Sequelize(config.database, config.username, config.password, {
+  dialect: config.dialect,
+  dialectOptions: {
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+});
 
 // 動態引入其他 models
 fs
