@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('Users', 'isBdmin', {
+  up: async (queryInterface, Sequelize) => {
+    return queryInterface.addColumn('Users', 'isAdmin', {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     })
@@ -14,8 +14,8 @@ module.exports = {
      */
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn('Users', 'isBdmin')
+  down: async (queryInterface, Sequelize) => {
+    return queryInterface.removeColumn('Users', 'isAdmin')
     /**
      * Add reverting commands here.
      *
