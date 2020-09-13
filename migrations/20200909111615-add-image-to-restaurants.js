@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('Restaurants', 'Image', {
+    return queryInterface.addColumn('Restaurants', 'image', {
       type: Sequelize.STRING
     });
     /**
