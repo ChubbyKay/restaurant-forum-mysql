@@ -115,10 +115,7 @@ const adminController = {
   },
   getUsers: (req, res) => {
     return User.findAll({ raw: true }).then(users => {
-      console.log('User', users)
-      // console.log('User 1', users.name)
-      return res.render('admin/users'), { users: users }
-
+      return res.render('admin/users', { users: users })
     })
   },
   putUsers: (req, res) => {
@@ -126,12 +123,17 @@ const adminController = {
       .then((user) => {
         if (user.isAdmin) {
           user.update({ isAdmin: false })
+            .then(() => {
+              req.flash('success_messages', 'user was successfully to update')
+              res.redirect('/admin/users')
+            })
         } else {
           user.update({ isAdmin: true })
+            .then(() => {
+              req.flash('success_messages', 'user was successfully to update')
+              res.redirect('/admin/users')
+            })
         }
-      }).then(() => {
-        res.flash('success_message', 'user was successfully to update')
-        res.redirect('/admin/users')
       })
   }
 }
