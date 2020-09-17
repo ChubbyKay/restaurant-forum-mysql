@@ -33,6 +33,7 @@ module.exports = (app, passport) => {
 
   // comment 相關路由
   app.post('/comments', authenticated, commentController.postComment)
+  app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
   // admin 的路由設定
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
