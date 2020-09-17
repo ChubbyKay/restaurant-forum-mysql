@@ -23,10 +23,12 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
-  // 瀏覽首頁會導入 restaurants 的頁面
+
+  // user 的路由設定
   app.get('/', authenticated, (req, res) => res.redirect('restaurants'))
   // 瀏覽 /restaurants 的頁面，則交由 restController.getRestaurants 處理
   app.get('/restaurants', authenticated, restController.getRestaurants)
+  app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
   // admin 的路由設定
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
@@ -49,11 +51,9 @@ module.exports = (app, passport) => {
   app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
   app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
-  // user 的路由設定
+  // 登入及登出的路由設定
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
-
-  // 登入及登出的路由設定
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
