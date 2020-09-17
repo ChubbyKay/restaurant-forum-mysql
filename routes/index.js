@@ -2,7 +2,7 @@ const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
-// const commentController = require('../controllers/commentController')
+const commentController = require('../controllers/commentController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
@@ -32,7 +32,7 @@ module.exports = (app, passport) => {
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
   // comment 相關路由
-  // app.post('/comments', authenticated, commentController.postComment)
+  app.post('/comments', authenticated, commentController.postComment)
 
   // admin 的路由設定
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
