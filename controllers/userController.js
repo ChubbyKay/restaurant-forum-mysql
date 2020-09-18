@@ -55,13 +55,13 @@ const userController = {
       ]
     })
       .then(user => {
-        return res.render('profile', { profile: user.toJSON() })
+        return res.render('user/profile', { profile: user.toJSON() })
       })
   },
   editUser: (req, res) => {
     return User.findByPk(req.params.id, { raw: true, nest: true })
       .then(user => {
-        return res.render('editProfile')
+        return res.render('user/editProfile')
       })
   },
   putUser: (req, res) => {

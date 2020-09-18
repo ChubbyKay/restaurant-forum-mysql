@@ -29,6 +29,7 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('restaurants'))
   // 瀏覽 /restaurants 的頁面，則交由 restController.getRestaurants 處理
   app.get('/restaurants', authenticated, restController.getRestaurants)
+  app.get('/restaurants/feeds', authenticated, restController.getFeeds)
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
   // comment 相關路由
