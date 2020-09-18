@@ -38,7 +38,10 @@ const restController = {
         ...r.dataValues,
         // 複寫 description 內容 (substring 用來指定文字限度)
         description: r.dataValues.description.substring(0, 50),
-        categoryName: r.Category.name
+        // 用 map 取出使用者的收藏餐廳清單 id，再用 includes 比對餐廳 id，結果會回傳布林值
+        // 白話：「現在這間餐廳」是否有出現在「使用者的收藏清單」裡
+        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id)
+        // categoryName: r.Category.name
       }))
       Category.findAll({ raw: true, nest: true })
         .then(categories => {
@@ -58,13 +61,16 @@ const restController = {
     return Restaurant.findByPk(req.params.id, {
       include: [
         Category,
+        { model: User, as: 'FavoritedUsers' },
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
       restaurant.increment('viewCounts')
-      // console.log('getRestaurant viewCounts', restaurant.toJSON().viewCounts)
+      // 「現在的 user」是否有出現在收藏「這間餐廳的使用者列表」裡
+      const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
       return res.render('restaurant', {
-        restaurant: restaurant.toJSON()
+        restaurant: restaurant.toJSON(),
+        isFavorited: isFavorited
       })
     })
   },
