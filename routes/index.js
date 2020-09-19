@@ -25,7 +25,7 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  // user 的路由設定
+  // restaurants 相關路由
   app.get('/', authenticated, (req, res) => res.redirect('restaurants'))
   // 瀏覽 /restaurants 的頁面，則交由 restController.getRestaurants 處理
   app.get('/restaurants', authenticated, restController.getRestaurants)
@@ -37,10 +37,14 @@ module.exports = (app, passport) => {
   app.post('/comments', authenticated, commentController.postComment)
   app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
-  // profile 相關路由
+  // user 相關路由
+  app.get('/users/top', authenticated, userController.getTopUser)
   app.get('/users/:id', authenticated, userController.getUser)
   app.get('/users/:id/edit', authenticated, userController.editUser)
   app.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
+  // follower 相關路由
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete('/following/:userId', authenticated, userController.removeFollowing)
 
   // favorite 相關路由
   app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)

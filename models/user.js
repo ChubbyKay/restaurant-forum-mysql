@@ -20,6 +20,22 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'LikedRestaurants'
     })
+    // User 的追蹤者(誰追蹤你)
+    User.belongsToMany(User, {
+      // 把現在的 user.id 對應到 Followship 裡的 followingId，並命名其為 Followers
+      // 白話：若 UserId 是 5 ，找出所有 followingId 是 5 的人，就是我的 follower
+      through: models.Followship,
+      foreignKey: 'followingId',
+      // Followers 可讓 control 和 view 撈到資料
+      as: 'Followers'
+    })
+    // User 追蹤中的 User(你追蹤誰)
+    // 白話：若 UserId 是 5 ，找出所有 followerId 是 5 的人，就是我在 following 的人
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followerId',
+      as: 'Followings'
+    })
   }
   return User
 }
