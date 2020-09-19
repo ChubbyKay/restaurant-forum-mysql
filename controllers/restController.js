@@ -40,7 +40,8 @@ const restController = {
         description: r.dataValues.description.substring(0, 50),
         // 用 map 取出使用者的收藏餐廳清單 id，再用 includes 比對餐廳 id，結果會回傳布林值
         // 白話：「現在這間餐廳」是否有出現在「使用者的收藏清單」裡
-        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id)
+        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id),
+        isLiked: req.user.LikedRestaurants.map(d => d.id).includes(r.id),
         // categoryName: r.Category.name
       }))
       Category.findAll({ raw: true, nest: true })
@@ -62,15 +63,18 @@ const restController = {
       include: [
         Category,
         { model: User, as: 'FavoritedUsers' },
+        { model: User, as: 'LikedUsers' },
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
       restaurant.increment('viewCounts')
       // 「現在的 user」是否有出現在收藏「這間餐廳的使用者列表」裡
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+      const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
       return res.render('restaurant', {
         restaurant: restaurant.toJSON(),
-        isFavorited: isFavorited
+        isFavorited: isFavorited,
+        isLiked: isLiked
       })
     })
   },
