@@ -41,4 +41,7 @@ app.listen(port, () => {
 })
 
 // 引入 routes 並將 app 傳進去，讓 routes 可以用 app 這個物件來指定路由
-require('./routes')(app, passport)
+// require('./routes')(app, passport)
+
+// 路由器分流後， index 不再需要 passport，故單純傳入 app 即可
+require('./routes')(app)
