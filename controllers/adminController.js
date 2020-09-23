@@ -3,15 +3,18 @@ const db = require('../models')
 const Restaurant = db.Restaurant
 const User = db.User
 const Category = db.Category
+const adminService = require('../services/adminService')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
+
 const adminController = {
+  // 執行 getRestaurants 時，呼叫 adminService 執行，並設下參數 data 作為 adminService callback 回傳的資料
+  // data 是叫 adminService 執行 callback function , adminService 執行完回傳的 callback ，會傳入 adminController 的 data
   getRestaurants: (req, res) => {
-    return Restaurant.findAll({ raw: true, nest: true, include: [Category] })
-      .then(restaurants => {
-        return res.render('admin/restaurants', { restaurants: restaurants })
-      })
+    adminService.getRestaurants(req, res, (data) => {
+      return res.render('admin/restaurants', data)
+    })
   },
   createRestaurant: (req, res) => {
     Category.findAll({
