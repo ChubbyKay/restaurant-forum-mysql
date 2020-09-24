@@ -34,7 +34,8 @@ router.post('/admin/categories', authenticated, authenticatedAdmin, categoryCont
 router.put('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.putCategory)
 router.delete('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.deleteCategory)
 
-// JWT signin
+// JWT 登入及登出路由設定
+router.post('/signup', userController.signUp)
 router.post('/signin', userController.signIn)
 
 module.exports = router
