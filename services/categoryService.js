@@ -16,13 +16,26 @@ const categoryService = {
   },
   postCategory: (req, res, callback) => {
     if (!req.body.name) {
-      callback({ status: 'error', massage: 'name didn\'t exist' })
+      callback({ status: 'error', message: 'name didn\'t exist' })
     } else {
       return Category.create({
         name: req.body.name
       })
         .then((category) => {
-          callback({ status: 'success', massage: 'category was successfully to created' })
+          callback({ status: 'success', message: 'category was successfully to created' })
+        })
+    }
+  },
+  putCategory: (req, res, callback) => {
+    if (!req.body.name) {
+      callback({ status: 'error', message: 'name didn\'t exist' })
+    } else {
+      return Category.findByPk(req.params.id)
+        .then((category) => {
+          category.update(req.body)
+            .then((category) => {
+              callback({ status: 'success', message: 'category was successfully to updated' })
+            })
         })
     }
   },
