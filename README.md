@@ -15,7 +15,7 @@ Password : 12345678
 ## 相關環境變數
 env.example
 ```
-IMGUR_CLIENT_ID=27c67907ec21ce4
+IMGUR_CLIENT_ID=SKIP
 JWT_SECRET=SKIP
 PORT=3000
 ```
