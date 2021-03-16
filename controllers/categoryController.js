@@ -13,9 +13,10 @@ let categoryController = {
       if (data['status'] === 'error') {
         req.flash('error_messages', data['message'])
         return res.redirect('back')
+      } else {
+        req.flash('success_messages', data['message'])
+        return res.redirect('/admin/categories')
       }
-      req.flash('success_messages', data['message'])
-      return res.redirect('/admin/categories')
     })
   },
   // postCategory: (req, res) => {
