@@ -8,8 +8,6 @@ User
 email	: user1@example.com
 Password : 12345678
 
-email	: user2@example.com
-Password : 12345678
 ```
 
 ## 相關環境變數
